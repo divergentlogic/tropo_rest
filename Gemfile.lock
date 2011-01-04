@@ -3,6 +3,7 @@ PATH
   specs:
     tropo_rest (0.0.1)
       faraday (~> 0.5.3)
+      multi_json (~> 0.0.5)
 
 GEM
   remote: http://rubygems.org/
@@ -20,8 +21,10 @@ GEM
       addressable (~> 2.2.2)
       multipart-post (~> 1.0.1)
       rack (>= 1.1.0, < 2)
+    json (1.4.6)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
+    multi_json (0.0.5)
     multipart-post (1.0.1)
     rack (1.2.1)
     rake (0.8.7)
@@ -57,6 +60,8 @@ DEPENDENCIES
   autotest-growl (~> 0.2.9)
   bundler (>= 1.0.0)
   faraday (~> 0.5.3)
+  json (~> 1.4)
+  multi_json (~> 0.0.5)
   rake (~> 0.8.7)
   rspec (~> 2.3.0)
   ruby-debug19

@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 2.3.0"
   s.add_development_dependency "webmock", "~> 1.6.1"
   s.add_development_dependency "autotest", "~> 4.3.2"
+  s.add_development_dependency "json", "~> 1.4"
 
   case RUBY_PLATFORM
   when /darwin/
@@ -34,6 +35,7 @@ Gem::Specification.new do |s|
   end
 
   s.add_runtime_dependency "faraday", "~> 0.5.3"
+  s.add_runtime_dependency "multi_json", "~> 0.0.5"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

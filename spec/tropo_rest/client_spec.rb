@@ -102,6 +102,60 @@ describe TropoRest::Client do
       a_request(:get, "https://username:password@api.tropo.com/v1/somewhere").should have_been_made
     end
 
+    it "should send the correct User-Agent" do
+      stub_get("somewhere")
+      @client.get("somewhere")
+      a_get("somewhere").with(:headers => {"User-Agent" => @client.user_agent}).should have_been_made
+    end
+
+    it "should send JSON Accept header" do
+      stub_get("somewhere")
+      @client.get("somewhere")
+      a_get("somewhere").with(:headers => {"Accept" => "application/json"}).should have_been_made
+    end
+
+    it "should send JSON Content-Type header" do
+      stub_get("somewhere")
+      @client.get("somewhere")
+      a_get("somewhere").with(:headers => {"Content-Type" => "application/json"}).should have_been_made
+    end
+
+    it "should use JSON encoded requests" do
+      params = {'hello' => 'world', 'array' => [1, 2, 3]}
+      stub_post("somewhere")
+      @client.post("somewhere", params)
+      a_post("somewhere").with(:body => MultiJson.encode(params)).should have_been_made
+    end
+
+    it "should decode JSON responses" do
+      params = {'hello' => 'world', 'array' => [1, 2, 3]}
+      body   = MultiJson.encode(params)
+      stub_get("somewhere").to_return(:body => body)
+      res = @client.get("somewhere")
+      res.should == params
+    end
+
+    context "underscore and camel case" do
+
+      before do
+        @underscore = {'voice_url' => 'http://example.com', 'messaging_url' => 'http://example2.com'}
+        @camel_case = {'voiceUrl' => 'http://example.com', 'messagingUrl' => 'http://example2.com'}
+      end
+
+      it "should convert request params to camel case" do
+        stub_post("somewhere")
+        @client.post("somewhere", @underscore)
+        a_post("somewhere").with(:body => MultiJson.encode(@camel_case)).should have_been_made
+      end
+
+      it "should convert response params to underscore" do
+        stub_get("somewhere").to_return(:body => MultiJson.encode(@camel_case))
+        res = @client.get("somewhere")
+        res.should == @underscore
+      end
+
+    end
+
   end
 
 end
