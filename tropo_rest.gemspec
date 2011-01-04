@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", ">= 1.0.0"
   s.add_development_dependency "rake", "~> 0.8.7"
   s.add_development_dependency "rspec", "~> 2.3.0"
+  s.add_development_dependency "webmock", "~> 1.6.1"
   s.add_development_dependency "autotest", "~> 4.3.2"
 
   case RUBY_PLATFORM
