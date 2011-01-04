@@ -158,4 +158,52 @@ describe TropoRest::Client do
 
   end
 
+  describe "errors" do
+
+    before do
+      @client = TropoRest::Client.new
+    end
+
+    it "should raise Bad Request on 400 status code" do
+      stub_get("error").to_return(:status => 400)
+      lambda { @client.get("error") }.should raise_error(TropoRest::BadRequest)
+    end
+
+    it "should raise Not Authorized on 401 status code" do
+      stub_get("error").to_return(:status => 401)
+      lambda { @client.get("error") }.should raise_error(TropoRest::NotAuthorized)
+    end
+
+    it "should raise Access Denied on 403 status code" do
+      stub_get("error").to_return(:status => 403)
+      lambda { @client.get("error") }.should raise_error(TropoRest::AccessDenied)
+    end
+
+    it "should raise Not Found on 404 status code" do
+      stub_get("error").to_return(:status => 404)
+      lambda { @client.get("error") }.should raise_error(TropoRest::NotFound)
+    end
+
+    it "should raise Method Not Allowed on 405 status code" do
+      stub_get("error").to_return(:status => 405)
+      lambda { @client.get("error") }.should raise_error(TropoRest::MethodNotAllowed)
+    end
+
+    it "should raise Unsupported Media Type on 415 status code" do
+      stub_get("error").to_return(:status => 415)
+      lambda { @client.get("error") }.should raise_error(TropoRest::UnsupportedMediaType)
+    end
+
+    it "should raise Internal Server Error on 500 status code" do
+      stub_get("error").to_return(:status => 500)
+      lambda { @client.get("error") }.should raise_error(TropoRest::InternalServerError)
+    end
+
+    it "should raise Service Unavailable on 503 status code" do
+      stub_get("error").to_return(:status => 503)
+      lambda { @client.get("error") }.should raise_error(TropoRest::ServiceUnavailable)
+    end
+
+  end
+
 end

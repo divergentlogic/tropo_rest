@@ -1,4 +1,5 @@
 require 'tropo_rest/version'
+require 'tropo_rest/error'
 require 'tropo_rest/configuration'
 require 'tropo_rest/request'
 require 'tropo_rest/connection'

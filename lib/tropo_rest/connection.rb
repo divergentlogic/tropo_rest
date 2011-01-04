@@ -3,6 +3,7 @@ require 'faraday/request/multi_json'
 require 'faraday/request/underscore_to_camel'
 require 'faraday/response/multi_json'
 require 'faraday/response/camel_to_underscore'
+require 'faraday/response/raise_http_errors'
 
 module TropoRest
   module Connection
@@ -21,6 +22,7 @@ module TropoRest
         connection.basic_auth(username, password)
         connection.use Faraday::Response::MultiJson
         connection.use Faraday::Response::CamelToUnderscore
+        connection.use Faraday::Response::RaiseHttpErrors
       end
     end
   end
