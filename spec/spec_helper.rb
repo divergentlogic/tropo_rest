@@ -39,6 +39,10 @@ def stub_put(path)
   stub_request(:put, tropo_url_for(path))
 end
 
+def request_body(hash)
+  MultiJson.encode(TropoRest::Utils.camelize(hash))
+end
+
 def tropo_url_for(path)
   TropoRest.endpoint + path
 end

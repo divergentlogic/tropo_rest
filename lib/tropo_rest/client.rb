@@ -5,6 +5,10 @@ module TropoRest
     include Connection
     include Request
 
+    require 'tropo_rest/client/application'
+
+    include TropoRest::Client::Application
+
     def initialize(options={})
       options = TropoRest.options.merge(options)
       Configuration::VALID_OPTIONS_KEYS.each do |key|

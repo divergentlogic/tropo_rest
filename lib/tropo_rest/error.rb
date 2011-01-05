@@ -27,4 +27,7 @@ module TropoRest
 
   # Raised when Tropo returns the HTTP status code 503
   class ServiceUnavailable < Error; end
+
+  # Raise when you pass invalid arguments to client methods
+  class ArgumentError < ArgumentError; end
 end
