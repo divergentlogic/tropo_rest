@@ -111,14 +111,6 @@ describe TropoRest::Client do
   describe "#create_application" do
 
     before do
-      stub_post("applications").
-        with(:body => {
-          "name" => "new app",
-          "voiceUrl" => "http://website.com",
-          "messagingUrl" => "http://website2.com",
-          "platform" => "scripting",
-          "partition" => "staging"}).
-        to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
       @params = {
         :name => "new app",
         :voice_url => "http://website.com",
@@ -126,6 +118,9 @@ describe TropoRest::Client do
         :platform => "scripting",
         :partition => "staging"
       }
+      stub_post("applications").
+        with(:body => request_body(@params)).
+        to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
     end
 
     it "should make the request" do
@@ -168,13 +163,14 @@ describe TropoRest::Client do
   describe "#update_application" do
 
     before do
-      stub_put("applications/123456").
-        to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
       @params = {
         :name => "newer app",
         :platform => "webapi",
         :partition => "production"
       }
+      stub_put("applications/123456").
+        with(:body => @params).
+        to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
     end
 
     it "should make the request" do
