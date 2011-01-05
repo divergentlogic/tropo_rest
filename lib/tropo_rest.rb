@@ -4,6 +4,7 @@ require 'tropo_rest/configuration'
 require 'tropo_rest/request'
 require 'tropo_rest/connection'
 require 'tropo_rest/client'
+require 'tropo_rest/utils'
 
 module TropoRest
   extend Configuration
