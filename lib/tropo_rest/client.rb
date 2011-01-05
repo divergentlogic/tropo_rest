@@ -6,8 +6,10 @@ module TropoRest
     include Request
 
     require 'tropo_rest/client/application'
+    require 'tropo_rest/client/exchange'
 
     include TropoRest::Client::Application
+    include TropoRest::Client::Exchange
 
     def initialize(options={})
       options = TropoRest.options.merge(options)
