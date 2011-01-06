@@ -2,22 +2,25 @@ module TropoRest
   class Client
     module Application
 
+      SINGULAR_PATH = "applications/%d".freeze
+      PLURAL_PATH   = "applications".freeze
+
       # Returns the authenticated user's applications
       #
       # @return [Array] The applications.
       # @see https://www.tropo.com/docs/rest/prov_view_apps.htm
       def applications
-        get("applications")
+        get(PLURAL_PATH)
       end
 
       # Returns the application specified by an ID
       #
-      # @param id [String, Integer] The ID of the application.
+      # @param id_or_href [String, Integer] The ID or HREF of the application.
       # @return [Hash] The application.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
-      def application(id)
-        verify_application_id(id)
-        get("applications/#{id}")
+      def application(id_or_href)
+        path = get_path(SINGULAR_PATH, id_or_href)
+        get(path)
       end
 
       # Creates a new application
@@ -32,22 +35,22 @@ module TropoRest
       # @raise [TropoRest::BadRequest] Error raised when invalid parameters are supplied.
       # @see https://www.tropo.com/docs/rest/prov_new_app.htm
       def create_application(params={})
-        post("applications", params)
+        post(PLURAL_PATH, params)
       end
 
       # Permanently destroys the application specified by an ID
       #
-      # @param id [String, Integer] The ID of the application to be deleted.
+      # @param id_or_href [String, Integer] The ID or HREF of the application to be deleted.
       # @return [Hash] An object with a "message" attribute indicating success.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
-      def delete_application(id)
-        verify_application_id(id)
-        delete("applications/#{id}")
+      def delete_application(id_or_href)
+        path = get_path(SINGULAR_PATH, id_or_href)
+        delete(path)
       end
 
       # Updates an application
       #
-      # @param id [String, Integer] The ID of the application to be updated.
+      # @param id_or_href [String, Integer] The ID or HREF of the application to be updated.
       # @param params [Hash] The attributes to be updated. of the application.
       # @option params [String] :name The name of the application. Required.
       # @option params [String] :platform Either "scripting" or "webapi". Required.
@@ -58,18 +61,10 @@ module TropoRest
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       # @see https://www.tropo.com/docs/rest/prov_update_name.htm
       # @see https://www.tropo.com/docs/rest/prov_add_urls.htm
-      def update_application(id, params={})
-        verify_application_id(id)
-        put("applications/#{id}", params)
+      def update_application(id_or_href, params={})
+        path = get_path(SINGULAR_PATH, id_or_href)
+        put(path, params)
       end
-
-  private
-
-    def verify_application_id(id)
-      unless id.respond_to?(:to_i) && id.to_i > 0
-        raise TropoRest::ArgumentError, "#{id.inspect} is not a valid application ID"
-      end
-    end
 
     end
   end

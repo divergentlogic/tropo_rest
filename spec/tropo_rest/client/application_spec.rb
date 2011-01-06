@@ -84,8 +84,13 @@ describe TropoRest::Client do
       )
     end
 
-    it "should make the request" do
+    it "should make the request with an application ID" do
       @client.application(1)
+      a_get("applications/1").should have_been_made
+    end
+
+    it "should make the request with an application HREF" do
+      @client.application("https://api.tropo.com/v1/applications/1")
       a_get("applications/1").should have_been_made
     end
 
@@ -98,12 +103,6 @@ describe TropoRest::Client do
       app["voice_url"].should      == "http://example1.com/voice.rb"
       app["messaging_url"].should  == "http://example1.com/messaging.rb"
       app["partition"].should      == "staging"
-    end
-
-    it "should raise an exception for invalid IDs" do
-      lambda { @client.application(0) }.should raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-      lambda { @client.application(:id => 123456) }.should raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-      lambda { @client.application("foo") }.should raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end
@@ -142,20 +141,19 @@ describe TropoRest::Client do
         to_return(:body => %({"message": "delete successful"}))
     end
 
-    it "should make the request" do
+    it "should make the request with an application ID" do
       @client.delete_application(123456)
+      a_delete("applications/123456").should have_been_made
+    end
+
+    it "should make the request with an application HREF" do
+      @client.delete_application("https://api.tropo.com/v1/applications/123456")
       a_delete("applications/123456").should have_been_made
     end
 
     it "should return a successful message" do
       res = @client.delete_application(123456)
       res["message"].should == "delete successful"
-    end
-
-    it "should raise an exception for invalid IDs" do
-      lambda { @client.update_application(0) }.should raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-      lambda { @client.update_application(:id => 123456) }.should raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-      lambda { @client.update_application("foo") }.should raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end
@@ -173,20 +171,19 @@ describe TropoRest::Client do
         to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
     end
 
-    it "should make the request" do
+    it "should make the request with an application ID" do
       @client.update_application(123456, @params)
+      a_put("applications/123456").with(:body => request_body(@params)).should have_been_made
+    end
+
+    it "should make the request with an application HREF" do
+      @client.update_application("https://api.tropo.com/v1/applications/123456", @params)
       a_put("applications/123456").with(:body => request_body(@params)).should have_been_made
     end
 
     it "should return the href of the application" do
       res = @client.update_application(123456, @params)
       res["href"].should == "https://api.tropo.com/v1/applications/123456"
-    end
-
-    it "should raise an exception for invalid IDs" do
-      lambda { @client.update_application(0) }.should raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-      lambda { @client.update_application(:id => 123456) }.should raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-      lambda { @client.update_application("foo") }.should raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end

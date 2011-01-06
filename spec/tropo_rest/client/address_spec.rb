@@ -39,8 +39,13 @@ describe TropoRest::Client do
       )
     end
 
-    it "should make the request" do
+    it "should make the request with an application ID" do
       @client.addresses(123456)
+      a_get("applications/123456/addresses").should have_been_made
+    end
+
+    it "should make the request with an address HREF" do
+      @client.addresses("https://api.tropo.com/v1/applications/123456/addresses")
       a_get("applications/123456/addresses").should have_been_made
     end
 
@@ -75,17 +80,6 @@ describe TropoRest::Client do
       fourth["username"].should == "tropocloud"
     end
 
-    it "should raise an exception for invalid application IDs" do
-      lambda { @client.addresses(0) }.should
-        raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-
-      lambda { @client.addresses(:id => 123456) }.should
-        raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-
-      lambda { @client.addresses("foo") }.should
-        raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
-    end
-
   end
 
   describe "#address" do
@@ -101,8 +95,13 @@ describe TropoRest::Client do
       )
     end
 
-    it "should make the request" do
+    it "should make the request with application ID, address type, and address identifier" do
       @client.address(123456, "skype", "+99000936209990123456")
+      a_get("applications/123456/addresses/skype/+99000936209990123456").should have_been_made
+    end
+
+    it "should make the request with an address HREF" do
+      @client.address("https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456")
       a_get("applications/123456/addresses/skype/+99000936209990123456").should have_been_made
     end
 
@@ -111,17 +110,6 @@ describe TropoRest::Client do
       app["href"].should    == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
       app["type"].should    == "skype"
       app["number"].should  == "+990009369990123456"
-    end
-
-    it "should raise an exception for invalid application IDs" do
-      lambda { @client.address(0, "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-
-      lambda { @client.address({:id => 123456}, "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-
-      lambda { @client.address("foo", "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end
@@ -135,25 +123,19 @@ describe TropoRest::Client do
         to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"}))
     end
 
-    it "should make the request" do
+    it "should make the request with an application ID" do
       @client.create_address(123456, @params)
+      a_post("applications/123456/addresses").with(:body => @params).should have_been_made
+    end
+
+    it "should make the request with an application HREF" do
+      @client.create_address("https://api.tropo.com/v1/applications/123456/addresses", @params)
       a_post("applications/123456/addresses").with(:body => @params).should have_been_made
     end
 
     it "should return the href of the address" do
       res = @client.create_address(123456, @params)
       res["href"].should == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
-    end
-
-    it "should raise an exception for invalid application IDs" do
-      lambda { @client.create_address(0, @params) }.should
-        raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-
-      lambda { @client.create_address({:id => 123456}, @params) }.should
-        raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-
-      lambda { @client.create_address("foo", @params) }.should
-        raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end
@@ -165,25 +147,19 @@ describe TropoRest::Client do
         to_return(:body => %({"message": "delete successful"}))
     end
 
-    it "should make the request" do
+    it "should make the request with application ID, address type, and address identifier" do
       @client.delete_address(123456, "skype", "+99000936209990123456")
+      a_delete("applications/123456/addresses/skype/+99000936209990123456").should have_been_made
+    end
+
+    it "should make the request with an address HREF" do
+      @client.delete_address("https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456")
       a_delete("applications/123456/addresses/skype/+99000936209990123456").should have_been_made
     end
 
     it "should return the message" do
       res = @client.delete_address(123456, "skype", "+99000936209990123456")
       res["message"].should == "delete successful"
-    end
-
-    it "should raise an exception for invalid application IDs" do
-      lambda { @client.delete_address(0, "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '0 is not a valid application ID')
-
-      lambda { @client.delete_address({:id => 123456}, "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '{:id=>123456} is not a valid application ID')
-
-      lambda { @client.delete_address("foo", "skype", "+99000936209990123456") }.should
-        raise_error(TropoRest::ArgumentError, '"foo" is not a valid application ID')
     end
 
   end

@@ -2,32 +2,38 @@ module TropoRest
   class Client
     module Address
 
+      SINGULAR_PATH = "applications/%d/addresses/%s/%s".freeze
+      PLURAL_PATH   = "applications/%d/addresses".freeze
+
       # Returns the addresses for the specified application
       #
-      # @param app_id [String, Integer] The ID of the application.
+      # @param application_id_or_address_href [String, Integer] The ID of the application or HREF of the address.
       # @return [Array] The addresses.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       # @see https://www.tropo.com/docs/rest/prov_view_app_addresses.htm
-      def addresses(app_id)
-        verify_application_id(app_id)
-        get("applications/#{app_id}/addresses")
+      def addresses(application_id_or_address_href)
+        path = get_path(PLURAL_PATH, application_id_or_address_href)
+        get(path)
       end
 
       # Returns the specified address
       #
-      # @param app_id [String, Integer] The ID of the application.
-      # @param type [String] The type of address (aim, gtalk, jabber, msn, skype, number, token, yahoo)
-      # @param id [String] The address, number, or username
+      # @overload address(application_id, type, identifier)
+      #   @param application_id [String, Integer] The ID of the application.
+      #   @param type [String] The type of address (aim, gtalk, jabber, msn, skype, number, token, yahoo)
+      #   @param identifier [String] The address, number, or username
+      # @overload address(href)
+      #   @param href [String] The HREF of the address
       # @return [Hash] The address.
-      # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application or address not found.
-      def address(app_id, type, id)
-        verify_application_id(app_id)
-        get("applications/#{app_id}/addresses/#{type}/#{id}")
+      # @raise [TropoRest::NotFound] Error raised when address not found.
+      def address(*args)
+        path = get_path(SINGULAR_PATH, *args)
+        get(path)
       end
 
       # Creates a new address for the specified application
       #
-      # @param app_id [String, Integer] The ID of the application.
+      # @param application_id_or_href [String, Integer] The ID or HREF of the application.
       # @param params [Hash] The attributes of the address to be created.
       # @option params [String] :type The type of address to create (aim, gtalk, jabber, msn, number, token, yahoo). Required.
       # @option params [String] :prefix The country and area code for a number
@@ -43,22 +49,25 @@ module TropoRest
       # @see https://www.tropo.com/docs/rest/prov_add_specific_num.htm
       # @see https://www.tropo.com/docs/rest/prov_add_im.htm
       # @see https://www.tropo.com/docs/rest/prov_add_token.htm
-      def create_address(app_id, params={})
-        verify_application_id(app_id)
-        post("applications/#{app_id}/addresses", params)
+      def create_address(application_id_or_href, params={})
+        path = get_path(PLURAL_PATH, application_id_or_href)
+        post(path, params)
       end
 
       # Removes an address from an application
       #
-      # @param app_id [String, Integer] The ID of the application to be deleted.
-      # @param type [String] The type of address (aim, gtalk, jabber, msn, skype, number, token, yahoo)
-      # @param id [String] The address, number, or username
+      # @overload delete_address(application_id, type, identifier)
+      #   @param application_id [String, Integer] The ID of the application.
+      #   @param type [String] The type of address (aim, gtalk, jabber, msn, skype, number, token, yahoo)
+      #   @param identifier [String] The address, number, or username
+      # @overload delete_address(href)
+      #   @param href [String] The HREF of the address to be deleted.
       # @return [Hash] An object with a "message" attribute indicating success.
-      # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application or address.
+      # @raise [TropoRest::NotFound] Error raised when address not found.
       # @see https://www.tropo.com/docs/rest/prov_delete_address.htm
-      def delete_address(app_id, type, id)
-        verify_application_id(app_id)
-        delete("applications/#{app_id}/addresses/#{type}/#{id}")
+      def delete_address(*args)
+        path = get_path(SINGULAR_PATH, *args)
+        delete(path)
       end
 
     end
