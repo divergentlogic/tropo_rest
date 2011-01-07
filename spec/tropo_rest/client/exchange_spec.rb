@@ -48,19 +48,22 @@ describe TropoRest::Client do
       second  = apps[1]
       third   = apps[2]
 
-      first["prefix"].should        == "1321"
-      first["city"].should          == "Orlando"
-      first["state"].should         == "FL"
-      first["country"].should       == "United States"
-      first["description"].should   == "Phone Number w/ SMS"
+      first.should be_instance_of(TropoRest::Resource::Exchange)
+      first.prefix.should        == "1321"
+      first.city.should          == "Orlando"
+      first.state.should         == "FL"
+      first.country.should       == "United States"
+      first.description.should   == "Phone Number w/ SMS"
 
-      second["prefix"].should       == "1888"
-      second["country"].should      == "United States"
-      second["description"].should  == "Toll Free Phone Number"
+      second.should be_instance_of(TropoRest::Resource::Exchange)
+      second.prefix.should       == "1888"
+      second.country.should      == "United States"
+      second.description.should  == "Toll Free Phone Number"
 
-      third["prefix"].should        == "31"
-      third["country"].should       == "Netherlands"
-      third["description"].should   == "International Phone Number"
+      third.should be_instance_of(TropoRest::Resource::Exchange)
+      third.prefix.should        == "31"
+      third.country.should       == "Netherlands"
+      third.description.should   == "International Phone Number"
     end
 
   end

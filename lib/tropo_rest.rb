@@ -2,6 +2,7 @@ require 'hashie/twash'
 
 require 'tropo_rest/resource/address'
 require 'tropo_rest/resource/application'
+require 'tropo_rest/resource/exchange'
 
 require 'tropo_rest/version'
 require 'tropo_rest/error'
