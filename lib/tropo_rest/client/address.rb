@@ -25,7 +25,7 @@ module TropoRest
       #   @param identifier [String] The address, number, or username
       # @overload address(href)
       #   @param href [String] The HREF of the address
-      # @return [Hash] The address.
+      # @return [TropoRest::Resource::Address] The address.
       # @raise [TropoRest::NotFound] Error raised when address not found.
       def address(*args)
         path = get_path(SINGULAR_PATH, *args)
@@ -42,7 +42,7 @@ module TropoRest
       # @option params [String] :channel Either "voice" or "messaging", used when creating a token
       # @option params [String] :username An IM username. Required when adding an IM account
       # @option params [String] :password An IM password. Required when adding an IM account
-      # @return [Hash] An object containing the "href" of the new application
+      # @return [Hashie::Mash] An object containing the "href" of the new application
       # @raise [TropoRest::BadRequest] Error raised when invalid parameters are supplied.
       # @see https://www.tropo.com/docs/rest/prov_add_number.htm
       # @see https://www.tropo.com/docs/rest/prov_add_toll_free.htm
@@ -63,7 +63,7 @@ module TropoRest
       #   @param identifier [String] The address, number, or username
       # @overload delete_address(href)
       #   @param href [String] The HREF of the address to be deleted.
-      # @return [Hash] An object with a "message" attribute indicating success.
+      # @return [Hashie::Mash] An object with a "message" attribute indicating success.
       # @raise [TropoRest::NotFound] Error raised when address not found.
       # @see https://www.tropo.com/docs/rest/prov_delete_address.htm
       def delete_address(*args)

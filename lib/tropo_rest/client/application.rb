@@ -17,7 +17,7 @@ module TropoRest
       # Returns the application specified by an ID
       #
       # @param id_or_href [String, Integer] The ID or HREF of the application.
-      # @return [Hash] The application.
+      # @return [TropoRest::Resource::Application] The application.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       def application(id_or_href)
         path = get_path(SINGULAR_PATH, id_or_href)
@@ -32,7 +32,7 @@ module TropoRest
       # @option params [String] :partition Either "staging" or "production". Defaults to "staging" if not specified.
       # @option params [String] :voice_url The voice endpoint of the application. Optional.
       # @option params [String] :messaging_url The messaging endpoint of the application. Optional.
-      # @return [Hash] An object containing the "href" of the new application
+      # @return [Hashie::Mash] An object containing the "href" of the new application
       # @raise [TropoRest::BadRequest] Error raised when invalid parameters are supplied.
       # @see https://www.tropo.com/docs/rest/prov_new_app.htm
       def create_application(params={})
@@ -42,7 +42,7 @@ module TropoRest
       # Permanently destroys the application specified by an ID
       #
       # @param id_or_href [String, Integer] The ID or HREF of the application to be deleted.
-      # @return [Hash] An object with a "message" attribute indicating success.
+      # @return [Hashie::Mash] An object with a "message" attribute indicating success.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       def delete_application(id_or_href)
         path = get_path(SINGULAR_PATH, id_or_href)
@@ -58,7 +58,7 @@ module TropoRest
       # @option params [String] :partition Either "staging" or "production". Defaults to "staging" if not specified.
       # @option params [String] :voice_url The voice endpoint of the application. Optional.
       # @option params [String] :messaging_url The messaging endpoint of the application. Optional.
-      # @return [Hash] An object containing the "href" of the new application
+      # @return [Hashie::Mash] An object containing the "href" of the new application
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       # @see https://www.tropo.com/docs/rest/prov_update_name.htm
       # @see https://www.tropo.com/docs/rest/prov_add_urls.htm
