@@ -107,16 +107,26 @@ describe TropoRest::Client do
       a_request(:get, "https://username:password@api.tropo.com/v1/somewhere").should have_been_made
     end
 
-    it "should use the session URL if the path passed in starts with 'sessions'" do
-      stub_request(:get, "https://api.tropo.com/1.0/sessions")
-      @client.get("sessions")
-      a_request(:get, "https://api.tropo.com/1.0/sessions").should have_been_made
-    end
-
     it "should send the correct User-Agent" do
       stub_get("somewhere")
       @client.get("somewhere")
       a_get("somewhere").with(:headers => {"User-Agent" => @client.user_agent}).should have_been_made
+    end
+
+    context "sessions" do
+
+      it "should use the session URL if the path passed in starts with 'sessions'" do
+        stub_request(:get, "https://api.tropo.com/1.0/sessions")
+        @client.get("sessions")
+        a_request(:get, "https://api.tropo.com/1.0/sessions").should have_been_made
+      end
+
+      it "should send XML Accept header" do
+        stub_session_get("sessions")
+        @client.get("sessions")
+        a_session_get("sessions").with(:headers => {"Accept" => "application/xml"}).should have_been_made
+      end
+
     end
 
     it "should send JSON Accept header" do

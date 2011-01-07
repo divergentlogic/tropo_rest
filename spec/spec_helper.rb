@@ -39,6 +39,26 @@ def stub_put(path)
   stub_request(:put, tropo_url_for(path))
 end
 
+def a_session_get(path)
+  a_request(:get, tropo_session_url_for(path))
+end
+
+def a_session_post(path)
+  a_request(:post, tropo_session_url_for(path))
+end
+
+def stub_session_get(path)
+  stub_request(:get, tropo_session_url_for(path))
+end
+
+def stub_session_post(path)
+  stub_request(:post, tropo_session_url_for(path))
+end
+
 def tropo_url_for(path)
   TropoRest.endpoint + path
+end
+
+def tropo_session_url_for(path)
+  TropoRest.session_endpoint + path
 end
