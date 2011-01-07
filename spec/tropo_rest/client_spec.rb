@@ -65,7 +65,7 @@ describe TropoRest::Client do
     end
 
     it "should perform GET" do
-      stub_get("somewhere").to_return(:status => 200, :headers => {}, :body => "")
+      stub_get("somewhere")
       @client.get("somewhere")
       a_get("somewhere").should have_been_made
     end
@@ -75,7 +75,7 @@ describe TropoRest::Client do
     end
 
     it "should perform POST" do
-      stub_post("somewhere").to_return(:status => 200, :headers => {}, :body => "")
+      stub_post("somewhere")
       @client.post("somewhere", {:foo => "bar"})
       a_post("somewhere").with(:body => {:foo => "bar"}).should have_been_made
     end
@@ -85,7 +85,7 @@ describe TropoRest::Client do
     end
 
     it "should perform PUT" do
-      stub_put("somewhere").to_return(:status => 200, :headers => {}, :body => "")
+      stub_put("somewhere")
       @client.put("somewhere", {:foo => "bar"})
       a_put("somewhere").with(:body => {:foo => "bar"}).should have_been_made
     end
@@ -95,13 +95,13 @@ describe TropoRest::Client do
     end
 
     it "should perform DELETE" do
-      stub_delete("somewhere").to_return(:status => 200, :headers => {}, :body => "")
+      stub_delete("somewhere")
       @client.delete("somewhere")
       a_delete("somewhere").should have_been_made
     end
 
     it "should use authenticated URL" do
-      stub_request(:get, "https://username:password@api.tropo.com/v1/somewhere").to_return(:status => 200, :headers => {}, :body => "")
+      stub_request(:get, "https://username:password@api.tropo.com/v1/somewhere")
       client = TropoRest::Client.new :username => "username", :password => "password"
       client.get("somewhere")
       a_request(:get, "https://username:password@api.tropo.com/v1/somewhere").should have_been_made
