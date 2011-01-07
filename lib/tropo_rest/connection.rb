@@ -8,10 +8,10 @@ module TropoRest
   module Connection
     private
 
-    def connection(resource)
+    def connection(url, resource)
       options = {
         :headers => {'Accept' => "application/json", 'User-Agent' => user_agent},
-        :url => endpoint
+        :url => url
       }
 
       Faraday::Connection.new(options) do |connection|

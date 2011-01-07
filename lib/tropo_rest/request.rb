@@ -45,7 +45,9 @@ module TropoRest
     # Perform an HTTP request
     def request(method, *args)
       path, resource, options = extract_request_args!(*args)
-      response = connection(resource).send(method) do |request|
+      # Do we need the session endpoint?
+      url = path =~ /^\/?sessions/ ? session_endpoint : endpoint
+      response = connection(url, resource).send(method) do |request|
         case method
         when :get, :delete
           request.url(path, options)
