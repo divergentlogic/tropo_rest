@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require 'bundler'
+Bundler.require
+
+require "irb"
+require 'tropo_rest'
+
+IRB.start(__FILE__)
