@@ -27,6 +27,8 @@ Gem::Specification.new do |s|
   when /darwin/
     s.add_development_dependency "autotest-fsevent", "~> 0.2.4"
     s.add_development_dependency "autotest-growl", "~> 0.2.9"
+  when /java/
+    s.add_development_dependency "jruby-openssl", "~> 0.7.2"
   end
 
   case RUBY_VERSION
