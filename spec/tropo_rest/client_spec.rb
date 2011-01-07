@@ -138,19 +138,23 @@ describe TropoRest::Client do
     context "underscore and camel case" do
 
       before do
+        class TestResource < Hashie::Twash
+          property :voice_url, :from => :voiceUrl
+          property :messaging_url, :from => :messagingUrl
+        end
         @underscore = {'voice_url' => 'http://example.com', 'messaging_url' => 'http://example2.com'}
         @camel_case = {'voiceUrl' => 'http://example.com', 'messagingUrl' => 'http://example2.com'}
       end
 
       it "should convert request params to camel case" do
         stub_post("somewhere")
-        @client.post("somewhere", @underscore)
+        @client.post("somewhere", TestResource.new(@underscore))
         a_post("somewhere").with(:body => MultiJson.encode(@camel_case)).should have_been_made
       end
 
       it "should convert response params to underscore" do
         stub_get("somewhere").to_return(:body => MultiJson.encode(@camel_case))
-        res = @client.get("somewhere")
+        res = @client.get("somewhere", TestResource)
         res.should == @underscore
       end
 
