@@ -1,5 +1,5 @@
 module Faraday
-  class Request::MultiJson < Faraday::Middleware
+  class Request::SerializeJson < Faraday::Middleware
     begin
       require 'multi_json'
     rescue LoadError, NameError => error
