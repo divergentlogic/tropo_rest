@@ -3,7 +3,7 @@ require 'faraday'
 module TropoRest
   # Defines constants and methods related to configuration
   module Configuration
-    VALID_OPTIONS_KEYS = [:username, :password, :adapter, :endpoint, :user_agent].freeze
+    VALID_OPTIONS_KEYS = [:username, :password, :adapter, :endpoint, :session_endpoint, :user_agent].freeze
 
     # By default, don't set a username
     DEFAULT_USERNAME = nil.freeze
@@ -18,6 +18,11 @@ module TropoRest
     #
     # @note You shouldn't set this unless you don't want to use SSL.
     DEFAULT_ENDPOINT = 'https://api.tropo.com/v1/'.freeze
+
+    # The endpoint that will be used for the creating sessions and sending signals
+    #
+    # @note You shouldn't set this unless you don't want to use SSL.
+    DEFAULT_SESSION_ENDPOINT = 'https://api.tropo.com/1.0/'.freeze
 
     # The user agent that will be sent to the API endpoint if none is set
     DEFAULT_USER_AGENT = "TropoRest Ruby Gem #{TropoRest::VERSION}".freeze
@@ -44,11 +49,12 @@ module TropoRest
 
     # Reset all configuration options to defaults
     def reset
-      self.username   = DEFAULT_USERNAME
-      self.password   = DEFAULT_PASSWORD
-      self.adapter    = DEFAULT_ADAPTER
-      self.endpoint   = DEFAULT_ENDPOINT
-      self.user_agent = DEFAULT_USER_AGENT
+      self.username           = DEFAULT_USERNAME
+      self.password           = DEFAULT_PASSWORD
+      self.adapter            = DEFAULT_ADAPTER
+      self.endpoint           = DEFAULT_ENDPOINT
+      self.session_endpoint   = DEFAULT_SESSION_ENDPOINT
+      self.user_agent         = DEFAULT_USER_AGENT
       self
     end
   end
