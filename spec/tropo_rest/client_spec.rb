@@ -124,7 +124,7 @@ describe TropoRest::Client do
       params = {'hello' => 'world', 'array' => [1, 2, 3]}
       stub_post("somewhere")
       @client.post("somewhere", params)
-      a_post("somewhere").with(:body => MultiJson.encode(params)).should have_been_made
+      a_post("somewhere").with(:body => params).should have_been_made
     end
 
     it "should decode JSON responses" do
@@ -149,7 +149,7 @@ describe TropoRest::Client do
       it "should convert request params to camel case" do
         stub_post("somewhere")
         @client.post("somewhere", TestResource.new(@underscore))
-        a_post("somewhere").with(:body => MultiJson.encode(@camel_case)).should have_been_made
+        a_post("somewhere").with(:body => @camel_case).should have_been_made
       end
 
       it "should convert response params to underscore" do
