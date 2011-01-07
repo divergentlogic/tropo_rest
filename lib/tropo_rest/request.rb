@@ -2,26 +2,33 @@ module TropoRest
   # Defines HTTP request methods
   module Request
     # Perform an HTTP GET request
-    def get(path, options={})
-      request(:get, path, options)
+    def get(*args)
+      request(:get, *args)
     end
 
     # Perform an HTTP POST request
-    def post(path, options={})
-      request(:post, path, options)
+    def post(*args)
+      request(:post, *args)
     end
 
     # Perform an HTTP PUT request
-    def put(path, options={})
-      request(:put, path, options)
+    def put(*args)
+      request(:put, *args)
     end
 
     # Perform an HTTP DELETE request
-    def delete(path, options={})
-      request(:delete, path, options)
+    def delete(*args)
+      request(:delete, *args)
     end
 
-    private
+  private
+
+    def extract_request_args!(*args)
+      options = args.last.is_a?(Hash) ? args.pop : {}
+      path, resource = args
+      resource ||= Hashie::Mash
+      [path, resource, options]
+    end
 
     # if a user passes in an HREF of a Tropo endpoint, return the path
     # otherwise, mash the args into the supplied template
@@ -36,8 +43,9 @@ module TropoRest
     end
 
     # Perform an HTTP request
-    def request(method, path, options)
-      response = connection.send(method) do |request|
+    def request(method, *args)
+      path, resource, options = extract_request_args!(*args)
+      response = connection(resource).send(method) do |request|
         case method
         when :get, :delete
           request.url(path, options)

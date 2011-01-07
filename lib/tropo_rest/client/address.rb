@@ -4,16 +4,17 @@ module TropoRest
 
       SINGULAR_PATH = "applications/%d/addresses/%s/%s".freeze
       PLURAL_PATH   = "applications/%d/addresses".freeze
+      RESOURCE      = TropoRest::Resource::Address
 
       # Returns the addresses for the specified application
       #
-      # @param application_id_or_address_href [String, Integer] The ID of the application or HREF of the address.
+      # @param application_id [String, Integer] The ID of the application.
       # @return [Array] The addresses.
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       # @see https://www.tropo.com/docs/rest/prov_view_app_addresses.htm
-      def addresses(application_id_or_address_href)
-        path = get_path(PLURAL_PATH, application_id_or_address_href)
-        get(path)
+      def addresses(application_id)
+        path = get_path(PLURAL_PATH, application_id)
+        get(path, RESOURCE)
       end
 
       # Returns the specified address
@@ -28,7 +29,7 @@ module TropoRest
       # @raise [TropoRest::NotFound] Error raised when address not found.
       def address(*args)
         path = get_path(SINGULAR_PATH, *args)
-        get(path)
+        get(path, RESOURCE)
       end
 
       # Creates a new address for the specified application

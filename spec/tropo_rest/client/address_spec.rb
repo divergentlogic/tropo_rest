@@ -60,24 +60,28 @@ describe TropoRest::Client do
       third   = apps[2]
       fourth  = apps[3]
 
-      first["href"].should      == "https://api.tropo.com/v1/applications/123456/addresses/sip/99901123456@sip.tropo.com"
-      first["type"].should      == "sip"
-      first["address"].should   == "9990123456@sip.tropo.com"
+      first.should be_instance_of(TropoRest::Resource::Address)
+      first.href.should      == "https://api.tropo.com/v1/applications/123456/addresses/sip/99901123456@sip.tropo.com"
+      first.type.should      == "sip"
+      first.address.should   == "9990123456@sip.tropo.com"
 
-      second["href"].should     == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
-      second["type"].should     == "skype"
-      second["number"].should   == "+990009369990123456"
+      second.should be_instance_of(TropoRest::Resource::Address)
+      second.href.should     == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
+      second.type.should     == "skype"
+      second.number.should   == "+990009369990123456"
 
-      third["href"].should      == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
-      third["type"].should      == "number"
-      third["prefix"].should    == "1407"
-      third["number"].should    == "4075551234"
-      third["city"].should      == "Orlando"
-      third["state"].should     == "FL"
+      third.should be_instance_of(TropoRest::Resource::Address)
+      third.href.should      == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
+      third.type.should      == "number"
+      third.prefix.should    == "1407"
+      third.number.should    == "4075551234"
+      third.city.should      == "Orlando"
+      third.state.should     == "FL"
 
-      fourth["href"].should     == "https://api.tropo.com/v1/applications/123456/addresses/aim/tropocloud"
-      fourth["type"].should     == "aim"
-      fourth["username"].should == "tropocloud"
+      fourth.should be_instance_of(TropoRest::Resource::Address)
+      fourth.href.should     == "https://api.tropo.com/v1/applications/123456/addresses/aim/tropocloud"
+      fourth.type.should     == "aim"
+      fourth.username.should == "tropocloud"
     end
 
   end
@@ -107,9 +111,9 @@ describe TropoRest::Client do
 
     it "should return an address object" do
       app = @client.address(123456, "skype", "+99000936209990123456")
-      app["href"].should    == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
-      app["type"].should    == "skype"
-      app["number"].should  == "+990009369990123456"
+      app.href.should    == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
+      app.type.should    == "skype"
+      app.number.should  == "+990009369990123456"
     end
 
   end
@@ -135,7 +139,7 @@ describe TropoRest::Client do
 
     it "should return the href of the address" do
       res = @client.create_address(123456, @params)
-      res["href"].should == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
+      res.href.should == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
     end
 
   end
@@ -159,7 +163,7 @@ describe TropoRest::Client do
 
     it "should return the message" do
       res = @client.delete_address(123456, "skype", "+99000936209990123456")
-      res["message"].should == "delete successful"
+      res.message.should == "delete successful"
     end
 
   end
