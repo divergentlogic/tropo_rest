@@ -4,13 +4,14 @@ module TropoRest
 
       SINGULAR_PATH = "applications/%d".freeze
       PLURAL_PATH   = "applications".freeze
+      RESOURCE      = TropoRest::Resource::Application
 
       # Returns the authenticated user's applications
       #
       # @return [Array] The applications.
       # @see https://www.tropo.com/docs/rest/prov_view_apps.htm
       def applications
-        get(PLURAL_PATH)
+        get(PLURAL_PATH, RESOURCE)
       end
 
       # Returns the application specified by an ID
@@ -20,7 +21,7 @@ module TropoRest
       # @raise [TropoRest::NotFound] Error raised when ID does not identify an active application.
       def application(id_or_href)
         path = get_path(SINGULAR_PATH, id_or_href)
-        get(path)
+        get(path, RESOURCE)
       end
 
       # Creates a new application
@@ -35,7 +36,7 @@ module TropoRest
       # @raise [TropoRest::BadRequest] Error raised when invalid parameters are supplied.
       # @see https://www.tropo.com/docs/rest/prov_new_app.htm
       def create_application(params={})
-        post(PLURAL_PATH, params)
+        post(PLURAL_PATH, RESOURCE.new(params))
       end
 
       # Permanently destroys the application specified by an ID
@@ -63,7 +64,7 @@ module TropoRest
       # @see https://www.tropo.com/docs/rest/prov_add_urls.htm
       def update_application(id_or_href, params={})
         path = get_path(SINGULAR_PATH, id_or_href)
-        put(path, params)
+        put(path, RESOURCE.new(params))
       end
 
     end

@@ -111,6 +111,7 @@ describe TropoRest::Client do
 
     it "should return an address object" do
       app = @client.address(123456, "skype", "+99000936209990123456")
+      app.should be_instance_of(TropoRest::Resource::Address)
       app.href.should    == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
       app.type.should    == "skype"
       app.number.should  == "+990009369990123456"
@@ -123,7 +124,7 @@ describe TropoRest::Client do
     before do
       @params = {:type => "number", :prefix => "1407"}
       stub_post("applications/123456/addresses").
-        with(:body => request_body(@params)).
+        with(:body => @params).
         to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"}))
     end
 

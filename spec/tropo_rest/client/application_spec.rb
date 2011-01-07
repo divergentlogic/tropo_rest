@@ -48,21 +48,23 @@ describe TropoRest::Client do
       first = apps.first
       last  = apps.last
 
-      first["id"].should             == "1"
-      first["href"].should           == "https://api.tropo.com/v1/applications/1"
-      first["name"].should           == "app1"
-      first["platform"].should       == "scripting"
-      first["voice_url"].should      == "http://example1.com/voice.rb"
-      first["messaging_url"].should  == "http://example1.com/messaging.rb"
-      first["partition"].should      == "staging"
+      first.should be_instance_of(TropoRest::Resource::Application)
+      first.id.should             == "1"
+      first.href.should           == "https://api.tropo.com/v1/applications/1"
+      first.name.should           == "app1"
+      first.platform.should       == "scripting"
+      first.voice_url.should      == "http://example1.com/voice.rb"
+      first.messaging_url.should  == "http://example1.com/messaging.rb"
+      first.partition.should      == "staging"
 
-      last["id"].should             == "2"
-      last["href"].should           == "https://api.tropo.com/v1/applications/2"
-      last["name"].should           == "app2"
-      last["platform"].should       == "webapi"
-      last["voice_url"].should      == "http://example2.com/voice"
-      last["messaging_url"].should  == "http://example2.com/messaging"
-      last["partition"].should      == "production"
+      last.should be_instance_of(TropoRest::Resource::Application)
+      last.id.should              == "2"
+      last.href.should            == "https://api.tropo.com/v1/applications/2"
+      last.name.should            == "app2"
+      last.platform.should        == "webapi"
+      last.voice_url.should       == "http://example2.com/voice"
+      last.messaging_url.should   == "http://example2.com/messaging"
+      last.partition.should       == "production"
     end
 
   end
@@ -96,13 +98,14 @@ describe TropoRest::Client do
 
     it "should return an application object" do
       app = @client.application(1)
-      app["id"].should             == "1"
-      app["href"].should           == "https://api.tropo.com/v1/applications/1"
-      app["name"].should           == "app1"
-      app["platform"].should       == "scripting"
-      app["voice_url"].should      == "http://example1.com/voice.rb"
-      app["messaging_url"].should  == "http://example1.com/messaging.rb"
-      app["partition"].should      == "staging"
+      app.should be_instance_of(TropoRest::Resource::Application)
+      app.id.should             == "1"
+      app.href.should           == "https://api.tropo.com/v1/applications/1"
+      app.name.should           == "app1"
+      app.platform.should       == "scripting"
+      app.voice_url.should      == "http://example1.com/voice.rb"
+      app.messaging_url.should  == "http://example1.com/messaging.rb"
+      app.partition.should      == "staging"
     end
 
   end
@@ -110,26 +113,33 @@ describe TropoRest::Client do
   describe "#create_application" do
 
     before do
-      @params = {
+      @underscore = {
         :name => "new app",
         :voice_url => "http://website.com",
         :messaging_url => "http://website2.com",
         :platform => "scripting",
         :partition => "staging"
       }
+      @camel_case = {
+        'name' => "new app",
+        'voiceUrl' => "http://website.com",
+        'messagingUrl' => "http://website2.com",
+        'platform' => "scripting",
+        'partition' => "staging"
+      }
       stub_post("applications").
-        with(:body => request_body(@params)).
+        with(:body => @camel_case).
         to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
     end
 
     it "should make the request" do
-      @client.create_application(@params)
-      a_post("applications").with(:body => request_body(@params)).should have_been_made
+      @client.create_application(@underscore)
+      a_post("applications").with(:body => @camel_case).should have_been_made
     end
 
     it "should return the href of the application" do
-      res = @client.create_application(@params)
-      res["href"].should == "https://api.tropo.com/v1/applications/123456"
+      res = @client.create_application(@underscore)
+      res.href.should == "https://api.tropo.com/v1/applications/123456"
     end
 
   end
@@ -153,7 +163,7 @@ describe TropoRest::Client do
 
     it "should return a successful message" do
       res = @client.delete_application(123456)
-      res["message"].should == "delete successful"
+      res.message.should == "delete successful"
     end
 
   end
@@ -161,29 +171,38 @@ describe TropoRest::Client do
   describe "#update_application" do
 
     before do
-      @params = {
+      @underscore = {
         :name => "newer app",
+        :voice_url => "http://voice.com",
+        :messaging_url => "http://messaging.com",
         :platform => "webapi",
         :partition => "production"
       }
+      @camel_case = {
+        'name' => "newer app",
+        'voiceUrl' => "http://voice.com",
+        'messagingUrl' => "http://messaging.com",
+        'platform' => "webapi",
+        'partition' => "production"
+      }
       stub_put("applications/123456").
-        with(:body => @params).
+        with(:body => @camel_case).
         to_return(:body => %({"href":"https://api.tropo.com/v1/applications/123456"}))
     end
 
     it "should make the request with an application ID" do
-      @client.update_application(123456, @params)
-      a_put("applications/123456").with(:body => request_body(@params)).should have_been_made
+      @client.update_application(123456, @underscore)
+      a_put("applications/123456").with(:body => @camel_case).should have_been_made
     end
 
     it "should make the request with an application HREF" do
-      @client.update_application("https://api.tropo.com/v1/applications/123456", @params)
-      a_put("applications/123456").with(:body => request_body(@params)).should have_been_made
+      @client.update_application("https://api.tropo.com/v1/applications/123456", @underscore)
+      a_put("applications/123456").with(:body => @camel_case).should have_been_made
     end
 
     it "should return the href of the application" do
-      res = @client.update_application(123456, @params)
-      res["href"].should == "https://api.tropo.com/v1/applications/123456"
+      res = @client.update_application(123456, @underscore)
+      res.href.should == "https://api.tropo.com/v1/applications/123456"
     end
 
   end

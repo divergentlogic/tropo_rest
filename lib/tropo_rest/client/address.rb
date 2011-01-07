@@ -52,7 +52,7 @@ module TropoRest
       # @see https://www.tropo.com/docs/rest/prov_add_token.htm
       def create_address(application_id_or_href, params={})
         path = get_path(PLURAL_PATH, application_id_or_href)
-        post(path, params)
+        post(path, RESOURCE.new(params))
       end
 
       # Removes an address from an application
