@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   when /^1\.9/
     s.add_development_dependency "ruby-debug19"
   when /^1\.8/
-    s.add_development_dependency "ruby-debug"
+    s.add_development_dependency "ruby-debug" unless defined?(RUBY_ENGINE) && RUBY_ENGINE == "rbx"
   end
 
   s.add_runtime_dependency "rack", "~> 1.1.0"
