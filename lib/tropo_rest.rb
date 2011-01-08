@@ -14,4 +14,18 @@ require 'tropo_rest/utils'
 
 module TropoRest
   extend Configuration
+
+  # Alias for TropoRest::Client.new
+  #
+  # @param options [Hash] Configuration options.
+  # @return [TropoRest::Client]
+  def self.client(options={})
+    TropoRest::Client.new(options)
+  end
+
+  # Delegate to TropoRest::Client
+  def self.method_missing(method, *args, &block)
+    return super unless client.respond_to?(method)
+    client.send(method, *args, &block)
+  end
 end
