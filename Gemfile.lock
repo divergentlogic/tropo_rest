@@ -7,7 +7,6 @@ PATH
       hashie (~> 0.4.0)
       multi_json (~> 0.0.5)
       multi_xml (~> 0.2.0)
-      rack (~> 1.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -38,7 +37,7 @@ GEM
     nokogiri (1.4.4)
     nokogiri (1.4.4-java)
       weakling (>= 0.0.3)
-    rack (1.1.0)
+    rack (1.2.1)
     rake (0.8.7)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
@@ -81,7 +80,6 @@ DEPENDENCIES
   multi_json (~> 0.0.5)
   multi_xml (~> 0.2.0)
   nokogiri (~> 1.4.4)
-  rack (~> 1.1.0)
   rake (~> 0.8.7)
   rspec (~> 2.3.0)
   ruby-debug19
