@@ -9,6 +9,7 @@ module TropoRest
       property :address
       property :city
       property :state
+      property :country
       property :channel
       property :username
       property :password
