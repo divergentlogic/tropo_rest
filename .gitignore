@@ -4,3 +4,4 @@ pkg/*
 .yardoc
 doc/*
 *.rbc
+Gemfile.lock
