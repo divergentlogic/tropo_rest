@@ -98,7 +98,13 @@ Thanks to [Tropo](https://www.tropo.com/) for creating such an awesome service.
 Thanks to the creators of the [twitter](https://github.com/jnunemaker/twitter/) gem, whose lovely code I shamelessly ripped off :)
 
 
+Authors
+-------
+
+* Christopher Durtschi
+
+
 Copyright
 ---------
 
-Copyright (c) 2011 Christopher Durtschi. See LICENSE for details.
+Copyright (c) 2011 Divergent Logic, LLC. See LICENSE for details.
