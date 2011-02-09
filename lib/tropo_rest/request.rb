@@ -24,7 +24,7 @@ module TropoRest
   private
 
     def extract_request_args!(*args)
-      options = args.last.is_a?(Hash) ? args.pop : {}
+      options = args.last.is_a?(Hash) ? args.pop.to_hash : {}
       path, resource = args
       resource ||= Hashie::Mash
       [path, resource, options]

@@ -191,6 +191,12 @@ describe TropoRest::Client do
         res.should == @underscore
       end
 
+      it "should call #to_hash on the parameters" do
+        params = TestResource.new(@underscore)
+        params.should_receive(:to_hash)
+        @client.send(:extract_request_args!, 'somewhere', params)
+      end
+
     end
 
   end
