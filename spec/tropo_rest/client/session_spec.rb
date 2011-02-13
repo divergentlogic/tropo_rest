@@ -38,6 +38,16 @@ describe TropoRest::Client do
         with(:body => params).should have_been_made
     end
 
+    it "should convert all parameters to strings" do
+      args   = {'dollars' => 123.45, 'count' => 1}
+      params = {'dollars' => '123.45', 'count' => '1', 'token' => 'TOKEN'}
+      stub_session_post("sessions").
+        with(:body => params)
+      @client.create_session("TOKEN", args)
+      a_session_post("sessions").
+        with(:body => params).should have_been_made
+    end
+
     it "should return the session object" do
       res = @client.create_session("TOKEN")
       res.should == {'success' => true, 'token' => 'TOKEN', 'id' => 'ID'}

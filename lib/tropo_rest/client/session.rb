@@ -11,7 +11,8 @@ module TropoRest
       # @return [Hashie::Mash] The session object.
       # @see https://www.tropo.com/docs/rest/starting_session.htm
       def create_session(token, params={})
-        params.merge! 'token' => token
+        params.merge!('token' => token)
+        params.merge!(params) { |k,v| v.to_s } # custom parameters must be strings
         post(PLURAL_PATH, params)
       end
 
