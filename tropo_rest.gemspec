@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "webmock", "~> 1.6.1"
   s.add_development_dependency "autotest", "~> 4.3.2"
   s.add_development_dependency "json", "~> 1.4"
-  s.add_development_dependency "nokogiri", "~> 1.4.4"
   s.add_development_dependency "yard", "~> 0.6.4"
 
   case RUBY_PLATFORM
