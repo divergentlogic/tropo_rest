@@ -47,11 +47,9 @@ module TropoRest
       path, resource, options = extract_request_args!(*args)
 
       # Do we need the session endpoint?
-      url     = path =~ /^\/?sessions/ ? session_endpoint : endpoint
-      # Need to parse XML for creating a session, but JSON for signals and everything else
-      format  = path =~ /^\/?sessions$/ ? :xml : :json
+      url = path =~ /^\/?sessions/ ? session_endpoint : endpoint
 
-      response = connection(url, format, resource).send(method) do |request|
+      response = connection(url, resource).send(method) do |request|
         case method
         when :get, :delete
           request.url(path, options)

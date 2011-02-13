@@ -121,11 +121,11 @@ describe TropoRest::Client do
         a_request(:get, "https://api.tropo.com/1.0/sessions").should have_been_made
       end
 
-      it "should send XML Accept header for session requests" do
-        params = {'action' => 'create', 'token' => 'TOKEN'}
-        stub_session_get("sessions").with(:query => params)
-        @client.get("sessions", params)
-        a_session_get("sessions").with(:query => params, :headers => {"Accept" => "application/xml"}).should have_been_made
+      it "should send JSON Accept header for session requests" do
+        params = {'token' => 'TOKEN'}
+        stub_session_post("sessions").with(:body => params)
+        @client.post("sessions", params)
+        a_session_post("sessions").with(:body => params, :headers => {"Accept" => "application/json"}).should have_been_made
       end
 
       context "signals" do
