@@ -13,7 +13,9 @@ module TropoRest
       def create_session(token, params={})
         params.merge!('token' => token)
         params.merge!(params) { |k,v| v.to_s } # custom parameters must be strings
-        post(PLURAL_PATH, params)
+        response = post(PLURAL_PATH, params)
+        response.id = response.id.strip if response.id
+        response
       end
 
     end
