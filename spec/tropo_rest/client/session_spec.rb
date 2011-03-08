@@ -32,7 +32,16 @@ describe TropoRest::Client do
       args   = {'phone_number' => '+19995551234', 'name' => 'Billy Gnosis'}
       params = args.merge('token' => 'TOKEN')
       stub_session_post("sessions").
-        with(:body => params)
+        with(:body => params).
+        to_return(:body => <<-JSON
+          {
+            "success": true,
+            "token": "TOKEN",
+            "id": "ID"
+          }
+          JSON
+        )
+
       @client.create_session("TOKEN", args)
       a_session_post("sessions").
         with(:body => params).should have_been_made
@@ -42,7 +51,16 @@ describe TropoRest::Client do
       args   = {'dollars' => 123.45, 'count' => 1}
       params = {'dollars' => '123.45', 'count' => '1', 'token' => 'TOKEN'}
       stub_session_post("sessions").
-        with(:body => params)
+        with(:body => params).
+        to_return(:body => <<-JSON
+          {
+            "success": true,
+            "token": "TOKEN",
+            "id": "ID"
+          }
+          JSON
+        )
+
       @client.create_session("TOKEN", args)
       a_session_post("sessions").
         with(:body => params).should have_been_made
