@@ -53,6 +53,20 @@ describe TropoRest::Client do
       res.should == {'success' => true, 'token' => 'TOKEN', 'id' => 'ID'}
     end
 
+    it "should strip the ID of whitespace" do
+      stub_session_post("sessions").
+        to_return(:body => <<-JSON
+          {
+            "success": true,
+            "token": "TOKEN",
+            "id": "ID\\r\\n"
+          }
+          JSON
+      )
+      res = @client.create_session("TOKEN")
+      res.should == {'success' => true, 'token' => 'TOKEN', 'id' => 'ID'}
+    end
+
   end
 
 end
