@@ -98,10 +98,11 @@ Thanks to [Tropo](https://www.tropo.com/) for creating such an awesome service.
 Thanks to the creators of the [twitter](https://github.com/jnunemaker/twitter/) gem, whose lovely code I shamelessly ripped off :)
 
 
-Authors
--------
+Contributors
+------------
 
-* Christopher Durtschi
+* [Christopher Durtschi](https://github.com/chrisdurtschi)
+* [David Verhasselt](https://github.com/relix)
 
 
 Copyright
