@@ -39,8 +39,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "faraday", "~> 0.5.3"
   s.add_runtime_dependency "faraday_middleware", "~> 0.3.1"
-  s.add_runtime_dependency "multi_json", "~> 0.0.5"
-  s.add_runtime_dependency "hashie", "~> 0.4.0"
+  s.add_runtime_dependency "multi_json", "~> 1.0.0"
+  s.add_runtime_dependency "hashie", "~> 1.0.0"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

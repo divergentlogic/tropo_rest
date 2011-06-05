@@ -1,4 +1,4 @@
-Bundler.require
+require 'bundler/setup'
 require 'tropo_rest'
 require 'webmock/rspec'
 
