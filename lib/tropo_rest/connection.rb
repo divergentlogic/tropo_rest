@@ -14,14 +14,15 @@ module TropoRest
         :url => url
       }
 
-      Faraday::Connection.new(options) do |connection|
-        connection.use Faraday::Request::SerializeJson
-        connection.adapter(adapter)
-        connection.basic_auth(username, password)
-        connection.use Faraday::Response::ParseJson
-        connection.use Faraday::Response::Resource, resource
-        connection.use Faraday::Response::RaiseHttpErrors
+      connection = Faraday::Connection.new(options) do |builder|
+        builder.use Faraday::Request::SerializeJson
+        builder.use Faraday::Response::Resource, resource
+        builder.use Faraday::Response::ParseJson
+        builder.use Faraday::Response::RaiseHttpErrors
+        builder.adapter(adapter)
       end
+      connection.basic_auth(username, password)
+      connection
     end
   end
 end

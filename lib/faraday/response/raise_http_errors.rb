@@ -1,40 +1,33 @@
 module Faraday
   class Response::RaiseHttpErrors < Response::Middleware
-    def self.register_on_complete(env)
-      env[:response].on_complete do |response|
-        case response[:status].to_i
-        when 400
-          raise TropoRest::BadRequest, error_message(response)
-        when 401
-          raise TropoRest::NotAuthorized, error_message(response)
-        when 403
-          raise TropoRest::AccessDenied, error_message(response)
-        when 404
-          raise TropoRest::NotFound, error_message(response)
-        when 405
-          raise TropoRest::MethodNotAllowed, error_message(response)
-        when 415
-          raise TropoRest::UnsupportedMediaType, error_message(response)
-        when 500
-          raise TropoRest::InternalServerError, error_message(response)
-        when 503
-          raise TropoRest::ServiceUnavailable, error_message(response)
-        end
+    def on_complete(env)
+      case env[:status].to_i
+      when 400
+        raise TropoRest::BadRequest, error_message(env)
+      when 401
+        raise TropoRest::NotAuthorized, error_message(env)
+      when 403
+        raise TropoRest::AccessDenied, error_message(env)
+      when 404
+        raise TropoRest::NotFound, error_message(env)
+      when 405
+        raise TropoRest::MethodNotAllowed, error_message(env)
+      when 415
+        raise TropoRest::UnsupportedMediaType, error_message(env)
+      when 500
+        raise TropoRest::InternalServerError, error_message(env)
+      when 503
+        raise TropoRest::ServiceUnavailable, error_message(env)
       end
     end
 
-    def initialize(app)
-      super
-      @parser = nil
+  private
+
+    def error_message(env)
+      "#{env[:method].to_s.upcase} #{env[:url].to_s}: #{env[:status]}#{error_body(env[:body])}"
     end
 
-    private
-
-    def self.error_message(response)
-      "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{response[:status]}#{error_body(response[:body])}"
-    end
-
-    def self.error_body(body)
+    def error_body(body)
       if body.nil?
         nil
       elsif body['error']

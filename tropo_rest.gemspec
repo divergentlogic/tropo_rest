@@ -37,8 +37,8 @@ Gem::Specification.new do |s|
     s.add_development_dependency "ruby-debug" unless defined?(RUBY_ENGINE) && RUBY_ENGINE == "rbx"
   end
 
-  s.add_runtime_dependency "faraday", "~> 0.5.3"
-  s.add_runtime_dependency "faraday_middleware", "~> 0.3.1"
+  s.add_runtime_dependency "faraday", "~> 0.6.0"
+  s.add_runtime_dependency "faraday_middleware", "~> 0.6.0"
   s.add_runtime_dependency "multi_json", "~> 1.0.0"
   s.add_runtime_dependency "hashie", "~> 1.0.0"
 

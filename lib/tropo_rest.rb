@@ -1,3 +1,4 @@
+require 'hashie/mash'
 require 'hashie/twash'
 
 require 'tropo_rest/resource/address'
