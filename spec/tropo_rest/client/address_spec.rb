@@ -14,12 +14,14 @@ describe TropoRest::Client do
           {
             "href": "https://api.tropo.com/v1/applications/123456/addresses/sip/99901123456@sip.tropo.com",
             "type": "sip",
-            "address": "9990123456@sip.tropo.com"
+            "address": "9990123456@sip.tropo.com",
+            "application": "https://api.tropo.com/v1/applications/123456"
           },
           {
             "href": "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456",
             "type": "skype",
-            "number": "+990009369990123456"
+            "number": "+990009369990123456",
+            "application": "https://api.tropo.com/v1/applications/123456"
           },
           {
             "href": "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234",
@@ -27,12 +29,14 @@ describe TropoRest::Client do
             "prefix": "1407",
             "number": "4075551234",
             "city": "Orlando",
-            "state": "FL"
+            "state": "FL",
+            "application": "https://api.tropo.com/v1/applications/123456"
           },
           {
             "href": "https://api.tropo.com/v1/applications/123456/addresses/aim/tropocloud",
             "type": "aim",
-            "username": "tropocloud"
+            "username": "tropocloud",
+            "application": "https://api.tropo.com/v1/applications/123456"
           }
         ]
         JSON
@@ -61,27 +65,31 @@ describe TropoRest::Client do
       fourth  = apps[3]
 
       first.should be_instance_of(TropoRest::Resource::Address)
-      first.href.should      == "https://api.tropo.com/v1/applications/123456/addresses/sip/99901123456@sip.tropo.com"
-      first.type.should      == "sip"
-      first.address.should   == "9990123456@sip.tropo.com"
+      first.href.should        == "https://api.tropo.com/v1/applications/123456/addresses/sip/99901123456@sip.tropo.com"
+      first.type.should        == "sip"
+      first.address.should     == "9990123456@sip.tropo.com"
+      first.application.should == "https://api.tropo.com/v1/applications/123456"
 
       second.should be_instance_of(TropoRest::Resource::Address)
-      second.href.should     == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
-      second.type.should     == "skype"
-      second.number.should   == "+990009369990123456"
+      second.href.should        == "https://api.tropo.com/v1/applications/123456/addresses/skype/+99000936209990123456"
+      second.type.should        == "skype"
+      second.number.should      == "+990009369990123456"
+      second.application.should == "https://api.tropo.com/v1/applications/123456"
 
       third.should be_instance_of(TropoRest::Resource::Address)
-      third.href.should      == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
-      third.type.should      == "number"
-      third.prefix.should    == "1407"
-      third.number.should    == "4075551234"
-      third.city.should      == "Orlando"
-      third.state.should     == "FL"
+      third.href.should        == "https://api.tropo.com/v1/applications/123456/addresses/number/+14075551234"
+      third.type.should        == "number"
+      third.prefix.should      == "1407"
+      third.number.should      == "4075551234"
+      third.city.should        == "Orlando"
+      third.state.should       == "FL"
+      third.application.should == "https://api.tropo.com/v1/applications/123456"
 
       fourth.should be_instance_of(TropoRest::Resource::Address)
-      fourth.href.should     == "https://api.tropo.com/v1/applications/123456/addresses/aim/tropocloud"
-      fourth.type.should     == "aim"
-      fourth.username.should == "tropocloud"
+      fourth.href.should        == "https://api.tropo.com/v1/applications/123456/addresses/aim/tropocloud"
+      fourth.type.should        == "aim"
+      fourth.username.should    == "tropocloud"
+      fourth.application.should == "https://api.tropo.com/v1/applications/123456"
     end
 
   end

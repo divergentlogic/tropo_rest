@@ -15,6 +15,7 @@ module TropoRest
       property :password
       property :token
       property :application_id
+      property :application
 
     end
   end
