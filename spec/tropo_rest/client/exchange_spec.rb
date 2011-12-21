@@ -16,17 +16,20 @@ describe TropoRest::Client do
             "city": "Orlando",
             "state": "FL",
             "country": "United States",
-            "description": "Phone Number w/ SMS"
+            "description": "Phone Number w/ SMS",
+            "smsEnabled": true
           },
           {
             "prefix": "1888",
             "country": "United States",
-            "description": "Toll Free Phone Number"
+            "description": "Toll Free Phone Number",
+            "smsEnabled": false
           },
           {
             "prefix": "31",
             "country": "Netherlands",
-            "description": "International Phone Number"
+            "description": "International Phone Number",
+            "smsEnabled": false
           }
         ]
         JSON
@@ -54,16 +57,19 @@ describe TropoRest::Client do
       first.state.should         == "FL"
       first.country.should       == "United States"
       first.description.should   == "Phone Number w/ SMS"
+      first.sms_enabled.should   == true
 
       second.should be_instance_of(TropoRest::Resource::Exchange)
       second.prefix.should       == "1888"
       second.country.should      == "United States"
       second.description.should  == "Toll Free Phone Number"
+      second.sms_enabled.should  == false
 
       third.should be_instance_of(TropoRest::Resource::Exchange)
       third.prefix.should        == "31"
       third.country.should       == "Netherlands"
       third.description.should   == "International Phone Number"
+      third.sms_enabled.should   == false
     end
 
   end

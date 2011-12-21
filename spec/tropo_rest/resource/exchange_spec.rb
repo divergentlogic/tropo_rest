@@ -4,7 +4,7 @@ describe TropoRest::Resource::Exchange do
 
   it { should be_kind_of(Hashie::Twash) }
 
-  %w[prefix city state country description].each do |param|
+  %w[prefix city state country description sms_enabled].each do |param|
     it { should respond_to(param) }
     it { should respond_to("#{param}=") }
   end

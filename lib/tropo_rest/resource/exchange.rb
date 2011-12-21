@@ -7,6 +7,7 @@ module TropoRest
       property :state
       property :country
       property :description
+      property :sms_enabled, :from => :smsEnabled
 
     end
   end
