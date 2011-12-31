@@ -247,6 +247,14 @@ describe TropoRest::Client do
       lambda { @client.get("error") }.should raise_error(TropoRest::ServiceUnavailable)
     end
 
+    it "should parse the response body" do
+      stub_get("error").to_return(:status => 404, :body => %({"error":"not found"}))
+      lambda { @client.get("error") }.should raise_error(
+        TropoRest::NotFound,
+        'GET https://api.tropo.com/v1/error: 404: not found'
+      )
+    end
+
   end
 
 end

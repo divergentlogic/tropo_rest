@@ -17,8 +17,8 @@ module TropoRest
       connection = Faraday::Connection.new(options) do |builder|
         builder.use Faraday::Request::SerializeJson
         builder.use Faraday::Response::Resource, resource
-        builder.use Faraday::Response::ParseJson
         builder.use Faraday::Response::RaiseHttpErrors
+        builder.use Faraday::Response::ParseJson
         builder.adapter(adapter)
       end
       connection.basic_auth(username, password)
